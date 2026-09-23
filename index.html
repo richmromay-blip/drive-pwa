@@ -1,188 +1,159 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#111827">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Drive">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon.svg">
-  <title>Drive</title>
-  <style>
-    :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#111827;background:#f7f7f8}
-    *{box-sizing:border-box} body{margin:0} main{max-width:560px;margin:auto;padding:20px 16px 40px}
-    h1,h2,p{margin:0}.date{color:#6b7280;font-size:14px;margin-top:4px}.money{font-variant-numeric:tabular-nums}
-    header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
-    .brand{font-size:25px;font-weight:750}.status{font-size:12px;color:#6b7280;margin-top:7px;text-align:right}
-    .summary{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:20px;margin-bottom:12px}
-    .label{font-size:14px;color:#6b7280}.big{font-size:40px;font-weight:750;letter-spacing:-1.5px;margin-top:4px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-    button{font:inherit;cursor:pointer;border:0}.btn{min-height:56px;border-radius:17px;padding:13px 14px;text-align:left;font-weight:650;background:#fff;border:1px solid #e5e7eb}
-    .primary{background:#111827;color:#fff;border-color:#111827}.btn .ico{font-size:21px;display:block;margin-bottom:4px}
-    .cards{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:4px 16px;margin:12px 0}
-    .row{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #eee}.row:last-child{border-bottom:0}.muted{color:#6b7280}
-    .section{margin-top:22px}.section h2{font-size:16px;margin-bottom:10px}
-    .activity{background:#fff;border:1px solid #e5e7eb;border-radius:18px;overflow:hidden}
-    .activity .row{padding:12px 16px;font-size:14px}
-    .empty{padding:20px;color:#6b7280;text-align:center;font-size:14px}
-    .sheet{display:none;background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:18px;margin-top:12px}
-    .sheet.show{display:block}.sheethead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-    .close{background:none;color:#6b7280;padding:6px}.field{display:block;font-size:14px;font-weight:600;margin:12px 0}
-    input,select{display:block;width:100%;margin-top:7px;border:1px solid #d1d5db;border-radius:13px;padding:14px;font-size:18px;background:#fff}
-    .full{width:100%;text-align:center;margin-top:12px}.typegrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-    .type{min-height:48px;border-radius:13px;background:#fff;border:1px solid #e5e7eb}.type.selected{border-color:#111827;background:#f3f4f6}
-    .result{border-radius:15px;padding:14px;margin-top:12px;background:#f3f4f6}.ok{background:#ecfdf5}.bad{background:#fef2f2}.warn{background:#fffbeb}
-    .hidden{display:none!important}.danger{color:#b91c1c}.small{font-size:13px}
-    @media(max-width:360px){.grid{grid-template-columns:1fr}.big{font-size:34px}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Drive">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>Drive</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#111827;background:#f7f7f8}
+*{box-sizing:border-box}body{margin:0}main{max-width:560px;margin:auto;padding:20px 16px 40px}
+h1,h2,p{margin:0}.muted{color:#6b7280}.money{font-variant-numeric:tabular-nums}
+.auth{max-width:420px;margin:12vh auto 0;background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:22px}
+.brand{font-size:28px;font-weight:800}.sub{margin-top:5px;color:#6b7280;font-size:14px}
+input{display:block;width:100%;margin-top:7px;border:1px solid #d1d5db;border-radius:13px;padding:14px;font-size:17px;background:#fff}
+label{display:block;font-size:14px;font-weight:600;margin:14px 0}.btn{min-height:50px;border-radius:15px;padding:12px 15px;font:inherit;font-weight:650;background:#fff;border:1px solid #e5e7eb;cursor:pointer}
+.primary{background:#111827;color:#fff;border-color:#111827}.full{width:100%;margin-top:10px}.msg{font-size:13px;margin-top:10px;min-height:18px}
+header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}.status{font-size:12px;color:#6b7280;margin-top:7px;text-align:right}
+.summary{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:20px;margin-bottom:12px}.label{font-size:14px;color:#6b7280}.big{font-size:40px;font-weight:750;letter-spacing:-1.5px;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.action{min-height:58px;text-align:left}.ico{font-size:21px;display:block;margin-bottom:3px}
+.cards{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:4px 16px;margin:12px 0}.row{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #eee}.row:last-child{border-bottom:0}
+.sheet{display:none;background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:18px;margin-top:12px}.sheet.show{display:block}
+.sheethead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.close{background:none;color:#6b7280;border:0;padding:6px;font:inherit}
+.typegrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.type{min-height:48px;border-radius:13px;background:#fff;border:1px solid #e5e7eb;font:inherit}.selected{border-color:#111827!important;background:#f3f4f6!important}
+.result{border-radius:15px;padding:14px;margin-top:12px}.ok{background:#ecfdf5}.bad{background:#fef2f2}.warn{background:#fffbeb}.hidden{display:none!important}
+.section{margin-top:22px}.section h2{font-size:16px;margin-bottom:10px}.activity{background:#fff;border:1px solid #e5e7eb;border-radius:18px;overflow:hidden}.empty{padding:20px;text-align:center;color:#6b7280;font-size:14px}
+.top-actions{display:flex;gap:7px;align-items:center}.logout{font-size:12px;padding:8px 10px;min-height:auto}
+@media(max-width:360px){.grid{grid-template-columns:1fr}.big{font-size:34px}}
+</style>
 </head>
 <body>
-<main>
-  <header>
-    <div><div class="brand">Drive</div><div id="date" class="date"></div></div>
-    <div id="dayStatus" class="status">EN CURSO</div>
-  </header>
+<div id="authView" class="auth hidden">
+  <div class="brand">Drive</div><p class="sub">Tus registros guardados en la nube.</p>
+  <label>Correo<input id="email" type="email" autocomplete="email" placeholder="tu@correo.com"></label>
+  <label>Contraseña<input id="password" type="password" autocomplete="current-password" placeholder="••••••••"></label>
+  <button id="login" class="btn primary full">Iniciar sesión</button>
+  <button id="signup" class="btn full">Crear cuenta</button>
+  <p id="authMsg" class="msg muted"></p>
+</div>
 
-  <section class="summary">
-    <div class="label">Efectivo registrado</div>
-    <div id="cash" class="big money">$0.00</div>
-  </section>
+<main id="appView" class="hidden">
+<header>
+  <div><div class="brand">Drive</div><div id="date" class="sub"></div></div>
+  <div class="top-actions"><div id="status" class="status">EN CURSO</div><button id="logout" class="btn logout">Salir</button></div>
+</header>
 
-  <div class="grid">
-    <button class="btn primary" id="cashBtn"><span class="ico">＋</span>Registrar efectivo</button>
-    <button class="btn" id="cardBtn"><span class="ico">💳</span>Registrar tarjeta</button>
-  </div>
-  <div class="grid">
-    <button class="btn" id="expenseBtn"><span class="ico">⛽</span>Registrar gasto</button>
-    <button class="btn" id="closeBtn"><span class="ico">🔒</span>Cierre de día</button>
-  </div>
+<section class="summary"><div class="label">Efectivo registrado</div><div id="cash" class="big money">$0.00</div></section>
+<div class="grid">
+<button class="btn primary action" id="cashBtn"><span class="ico">＋</span>Registrar efectivo</button>
+<button class="btn action" id="cardBtn"><span class="ico">💳</span>Registrar tarjeta</button>
+</div>
+<div class="grid">
+<button class="btn action" id="expenseBtn"><span class="ico">⛽</span>Registrar gasto</button>
+<button class="btn action" id="closeBtn"><span class="ico">🔒</span>Cierre de día</button>
+</div>
+<section class="cards">
+<div class="row"><span class="muted">💳 Tarjeta Didi</span><strong id="card" class="money">$0.00</strong></div>
+<div class="row"><span class="muted">⛽ Gastos</span><strong id="expenses" class="money">$0.00</strong></div>
+<div class="row"><span>Total generado</span><strong id="total" class="money">$0.00</strong></div>
+</section>
 
-  <section class="cards">
-    <div class="row"><span class="muted">💳 Tarjeta Didi</span><strong id="card" class="money">$0.00</strong></div>
-    <div class="row"><span class="muted">⛽ Gastos</span><strong id="expenses" class="money">$0.00</strong></div>
-    <div class="row"><span>Total generado</span><strong id="total" class="money">$0.00</strong></div>
-  </section>
+<section id="form" class="sheet">
+<div class="sheethead"><h2 id="formTitle">Registrar</h2><button class="close" id="cancel">Cancelar</button></div>
+<label>Monto<input id="amount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00"></label>
+<div id="expenseTypes" class="typegrid hidden">
+<button class="type" data-type="Gasolina">⛽ Gasolina</button><button class="type" data-type="Comida">🍔 Comida</button>
+<button class="type" data-type="Estacionamiento">🅿️ Estacionamiento</button><button class="type" data-type="Otro">＋ Otro</button>
+</div>
+<button id="save" class="btn primary full">Guardar</button><p id="formMsg" class="msg muted"></p>
+</section>
 
-  <section id="form" class="sheet">
-    <div class="sheethead"><h2 id="formTitle">Registrar</h2><button class="close" id="cancel">Cancelar</button></div>
-    <label class="field">Monto
-      <input id="amount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00">
-    </label>
-    <div id="expenseTypes" class="typegrid hidden">
-      <button class="type" data-type="Gasolina">⛽ Gasolina</button>
-      <button class="type" data-type="Comida">🍔 Comida</button>
-      <button class="type" data-type="Estacionamiento">🅿️ Estacionamiento</button>
-      <button class="type" data-type="Otro">＋ Otro</button>
-    </div>
-    <button class="btn primary full" id="save">Guardar</button>
-    <p id="formMsg" class="small muted" style="margin-top:9px"></p>
-  </section>
+<section id="closeForm" class="sheet">
+<div class="sheethead"><h2>Cierre de día</h2><button class="close" id="cancelClose">Cancelar</button></div>
+<div class="cards" style="margin:0">
+<div class="row"><span class="muted">Efectivo registrado</span><strong id="cCash">$0.00</strong></div>
+<div class="row"><span class="muted">Gastos en efectivo</span><strong id="cExp">$0.00</strong></div>
+<div class="row"><span>Efectivo esperado</span><strong id="expected">$0.00</strong></div>
+</div>
+<label>Efectivo contado<input id="counted" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00"></label>
+<button id="check" class="btn primary full">Comprobar cierre</button>
+<div id="closeResult" class="result hidden"></div>
+<button id="finishClose" class="btn full hidden">Guardar cierre</button>
+</section>
 
-  <section id="closeForm" class="sheet">
-    <div class="sheethead"><h2>Cierre de día</h2><button class="close" id="cancelClose">Cancelar</button></div>
-    <div class="cards" style="margin:0">
-      <div class="row"><span class="muted">Efectivo registrado</span><strong id="cCash">$0.00</strong></div>
-      <div class="row"><span class="muted">Gastos en efectivo</span><strong id="cExp">$0.00</strong></div>
-      <div class="row"><span>Efectivo esperado</span><strong id="expected">$0.00</strong></div>
-    </div>
-    <label class="field">Efectivo contado
-      <input id="counted" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00">
-    </label>
-    <button class="btn primary full" id="check">Comprobar cierre</button>
-    <div id="closeResult" class="result hidden"></div>
-    <button class="btn full hidden" id="finishClose">Guardar cierre</button>
-  </section>
-
-  <section class="section">
-    <h2>Movimientos de hoy</h2>
-    <div id="activity" class="activity"><div class="empty">Aún no hay movimientos.</div></div>
-  </section>
+<section class="section"><h2>Movimientos de hoy</h2><div id="activity" class="activity"><div class="empty">Cargando…</div></div></section>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <script>
-(() => {
-  const KEY='drive-pwa-v1';
-  const todayKey=()=>{const d=new Date();return d.toISOString().slice(0,10)};
-  const fmt=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0);
-  const dateFmt=()=>new Intl.DateTimeFormat('es-MX',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
-  const blank=()=>({date:todayKey(),cash:0,card:0,expenses:0,expenseItems:[],entries:[],closed:false,counted:null});
-  let data=load();
-  let mode=null, expenseType='';
-
-  function load(){
-    try{
-      const all=JSON.parse(localStorage.getItem(KEY)||'{}');
-      const k=todayKey();
-      if(!all[k]){all[k]=blank();localStorage.setItem(KEY,JSON.stringify(all))}
-      return all[k];
-    }catch(e){return blank()}
-  }
-  function save(){const all=JSON.parse(localStorage.getItem(KEY)||'{}');all[todayKey()]=data;localStorage.setItem(KEY,JSON.stringify(all))}
-  function el(id){return document.getElementById(id)}
-  function render(){
-    el('date').textContent=dateFmt();
-    el('cash').textContent=fmt(data.cash);
-    el('card').textContent=fmt(data.card);
-    el('expenses').textContent=fmt(data.expenses);
-    el('total').textContent=fmt(data.cash+data.card);
-    el('dayStatus').textContent=data.closed?'DÍA CERRADO':'EN CURSO';
-    el('dayStatus').style.color=data.closed?'#047857':'#6b7280';
-    const a=el('activity');
-    if(!data.entries.length){a.innerHTML='<div class="empty">Aún no hay movimientos.</div>';return}
-    a.innerHTML=data.entries.slice().reverse().slice(0,12).map(x=>
-      `<div class="row"><span>${esc(x.label)}<br><span class="small muted">${esc(x.time)}</span></span><strong class="money">${fmt(x.amount)}</strong></div>`
-    ).join('');
-  }
-  function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-  function openForm(m){
-    if(data.closed){alert('Este día ya está cerrado.');return}
-    mode=m;expenseType='';
-    el('form').classList.add('show');el('closeForm').classList.remove('show');
-    el('formTitle').textContent=m==='cash'?'Registrar efectivo':m==='card'?'Registrar tarjeta':'Registrar gasto';
-    el('expenseTypes').classList.toggle('hidden',m!=='expense');el('amount').value='';el('formMsg').textContent='';
-    document.querySelectorAll('.type').forEach(x=>x.classList.remove('selected'));
-    setTimeout(()=>el('amount').focus(),50);
-  }
-  function hideForms(){el('form').classList.remove('show');el('closeForm').classList.remove('show')}
-  function now(){return new Intl.DateTimeFormat('es-MX',{hour:'2-digit',minute:'2-digit'}).format(new Date())}
-  el('cashBtn').onclick=()=>openForm('cash');
-  el('cardBtn').onclick=()=>openForm('card');
-  el('expenseBtn').onclick=()=>openForm('expense');
-  el('cancel').onclick=hideForms;
-  document.querySelectorAll('.type').forEach(b=>b.onclick=()=>{expenseType=b.dataset.type;document.querySelectorAll('.type').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')});
-  el('save').onclick=()=>{
-    const v=Number(el('amount').value);
-    if(!Number.isFinite(v)||v<=0){el('formMsg').textContent='Introduce un monto válido.';return}
-    if(mode==='cash'){data.cash+=v;data.entries.push({label:'Efectivo',amount:v,time:now()})}
-    if(mode==='card'){data.card=v;data.entries.push({label:'Tarjeta Didi',amount:v,time:now()})}
-    if(mode==='expense'){data.expenses+=v;data.expenseItems.push({type:expenseType||'Otro',amount:v});data.entries.push({label:'Gasto · '+(expenseType||'Otro'),amount:v,time:now()})}
-    save();hideForms();render();
-  };
-  el('closeBtn').onclick=()=>{
-    if(data.closed){alert('Este día ya está cerrado.');return}
-    hideForms();el('closeForm').classList.add('show');
-    el('cCash').textContent=fmt(data.cash);el('cExp').textContent=fmt(data.expenses);
-    el('expected').textContent=fmt(Math.max(0,data.cash-data.expenses));
-    el('counted').value='';el('closeResult').className='result hidden';el('finishClose').classList.add('hidden');
-    setTimeout(()=>el('counted').focus(),50);
-  };
-  el('cancelClose').onclick=hideForms;
-  el('check').onclick=()=>{
-    const v=Number(el('counted').value);
-    const r=el('closeResult');
-    if(!Number.isFinite(v)||v<0){r.className='result bad';r.textContent='Introduce el efectivo contado.';return}
-    const expected=Math.max(0,data.cash-data.expenses), diff=Number((v-expected).toFixed(2));
-    data.counted=v;
-    if(Math.abs(diff)<0.005){r.className='result ok';r.innerHTML='<strong>🟢 Cierre correcto</strong><div class="small" style="margin-top:4px">El efectivo contado coincide con el esperado.</div>'}
-    else if(diff<0){r.className='result bad';r.innerHTML=`<strong>🔴 Faltan ${fmt(Math.abs(diff))}</strong><div class="small" style="margin-top:4px">El efectivo contado está por debajo del esperado.</div>`}
-    else{r.className='result warn';r.innerHTML=`<strong>🟡 Sobran ${fmt(diff)}</strong><div class="small" style="margin-top:4px">El efectivo contado está por encima del esperado.</div>`}
-    el('finishClose').classList.remove('hidden');
-  };
-  el('finishClose').onclick=()=>{data.closed=true;save();hideForms();render();alert('Cierre guardado.');};
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
-  render();
+(async()=>{
+const cfg=window.DRIVE_CONFIG||{}; const ready=cfg.SUPABASE_URL&&cfg.SUPABASE_PUBLISHABLE_KEY&&!cfg.SUPABASE_URL.startsWith('PEGA_AQUI');
+const authView=document.getElementById('authView'),appView=document.getElementById('appView');
+if(!ready){authView.classList.remove('hidden');document.getElementById('authMsg').textContent='Falta configurar Supabase. Edita config.js con la URL y Publishable key de tu proyecto.';return}
+const {createClient}=window.supabase; const sb=createClient(cfg.SUPABASE_URL,cfg.SUPABASE_PUBLISHABLE_KEY);
+const money=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0);
+const dayKey=()=>new Date().toISOString().slice(0,10);
+const dateText=()=>new Intl.DateTimeFormat('es-MX',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
+let user=null,day=null,entries=[],mode=null,expenseType='';
+const $=id=>document.getElementById(id);
+function showAuth(msg=''){authView.classList.remove('hidden');appView.classList.add('hidden');$('authMsg').textContent=msg}
+function showApp(){authView.classList.add('hidden');appView.classList.remove('hidden');$('date').textContent=dateText()}
+function closeSheets(){$('form').classList.remove('show');$('closeForm').classList.remove('show')}
+function render(){
+ const cash=entries.filter(x=>x.entry_type==='cash').reduce((a,x)=>a+Number(x.amount),0);
+ const expenses=entries.filter(x=>x.entry_type==='expense').reduce((a,x)=>a+Number(x.amount),0);
+ $('cash').textContent=money(cash);$('card').textContent=money(day?.card_amount||0);$('expenses').textContent=money(expenses);$('total').textContent=money(cash+Number(day?.card_amount||0));
+ $('status').textContent=day?.closed?'DÍA CERRADO':'EN CURSO';$('status').style.color=day?.closed?'#047857':'#6b7280';
+ $('activity').innerHTML=entries.length?entries.slice().reverse().slice(0,15).map(x=>`<div class="row"><span>${x.entry_type==='cash'?'Efectivo':'Gasto · '+(x.category||'Otro')}<br><span class="muted" style="font-size:13px">${new Date(x.created_at).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})}</span></span><strong class="money">${money(x.amount)}</strong></div>`).join(''):'<div class="empty">Aún no hay movimientos.</div>';
+}
+async function loadDay(){
+ const {data:d,error:e}=await sb.from('drive_days').select('*').eq('user_id',user.id).eq('day',dayKey()).maybeSingle();
+ if(e){alert(e.message);return}
+ if(d) day=d; else {const {data:n,error:ne}=await sb.from('drive_days').insert({user_id:user.id,day:dayKey()}).select().single();if(ne){alert(ne.message);return}day=n}
+ const {data:es,error:ee}=await sb.from('drive_entries').select('*').eq('user_id',user.id).eq('day_id',day.id).order('created_at',{ascending:true});
+ if(ee){alert(ee.message);return} entries=es||[]; render();
+}
+async function init(u){user=u;showApp();await loadDay()}
+$('login').onclick=async()=>{const {data,error}=await sb.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error){$('authMsg').textContent='No se pudo iniciar sesión: '+error.message;return}await init(data.user)}
+$('signup').onclick=async()=>{const {data,error}=await sb.auth.signUp({email:$('email').value.trim(),password:$('password').value});if(error){$('authMsg').textContent='No se pudo crear la cuenta: '+error.message;return}$('authMsg').textContent=data.session?'Cuenta creada. Entrando…':'Cuenta creada. Revisa tu correo si Supabase solicita confirmación.';if(data.session)await init(data.user)}
+$('logout').onclick=async()=>{await sb.auth.signOut();user=null;day=null;entries=[];showAuth('Sesión cerrada.')}
+function openForm(m){if(day?.closed){alert('Este día ya está cerrado.');return}mode=m;expenseType='';closeSheets();$('form').classList.add('show');$('formTitle').textContent=m==='cash'?'Registrar efectivo':m==='card'?'Registrar tarjeta':'Registrar gasto';$('expenseTypes').classList.toggle('hidden',m!=='expense');$('amount').value='';$('formMsg').textContent='';document.querySelectorAll('.type').forEach(x=>x.classList.remove('selected'));setTimeout(()=>$('amount').focus(),50)}
+$('cashBtn').onclick=()=>openForm('cash');$('cardBtn').onclick=()=>openForm('card');$('expenseBtn').onclick=()=>openForm('expense');$('cancel').onclick=closeSheets;
+document.querySelectorAll('.type').forEach(b=>b.onclick=()=>{expenseType=b.dataset.type;document.querySelectorAll('.type').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')});
+$('save').onclick=async()=>{
+ const v=Number($('amount').value);if(!Number.isFinite(v)||v<=0){$('formMsg').textContent='Introduce un monto válido.';return}
+ if(mode==='card'){
+   const {error}=await sb.from('drive_days').update({card_amount:v,updated_at:new Date().toISOString()}).eq('id',day.id).eq('user_id',user.id);
+   if(error){$('formMsg').textContent=error.message;return}day.card_amount=v;
+ }else{
+   const {data,error}=await sb.from('drive_entries').insert({user_id:user.id,day_id:day.id,entry_type:mode,amount:v,category:mode==='expense'?(expenseType||'Otro'):null}).select().single();
+   if(error){$('formMsg').textContent=error.message;return}entries.push(data);
+ }
+ closeSheets();render();
+};
+$('closeBtn').onclick=()=>{
+ if(day?.closed){alert('Este día ya está cerrado.');return}
+ closeSheets();$('closeForm').classList.add('show');
+ const cash=entries.filter(x=>x.entry_type==='cash').reduce((a,x)=>a+Number(x.amount),0),exp=entries.filter(x=>x.entry_type==='expense').reduce((a,x)=>a+Number(x.amount),0);
+ $('cCash').textContent=money(cash);$('cExp').textContent=money(exp);$('expected').textContent=money(Math.max(0,cash-exp));$('counted').value='';$('closeResult').className='result hidden';$('finishClose').classList.add('hidden');setTimeout(()=>$('counted').focus(),50);
+};
+$('cancelClose').onclick=closeSheets;
+$('check').onclick=()=>{
+ const v=Number($('counted').value);const cash=entries.filter(x=>x.entry_type==='cash').reduce((a,x)=>a+Number(x.amount),0),exp=entries.filter(x=>x.entry_type==='expense').reduce((a,x)=>a+Number(x.amount),0),expected=Math.max(0,cash-exp),diff=Number((v-expected).toFixed(2)),r=$('closeResult');
+ if(!Number.isFinite(v)||v<0){r.className='result bad';r.textContent='Introduce el efectivo contado.';return}
+ day.counted_cash=v;
+ if(Math.abs(diff)<.005){r.className='result ok';r.innerHTML='<strong>🟢 Cierre correcto</strong><div style="font-size:13px;margin-top:4px">El efectivo contado coincide con el esperado.</div>'}
+ else if(diff<0){r.className='result bad';r.innerHTML=`<strong>🔴 Faltan ${money(Math.abs(diff))}</strong><div style="font-size:13px;margin-top:4px">El efectivo contado está por debajo del esperado.</div>`}
+ else{r.className='result warn';r.innerHTML=`<strong>🟡 Sobran ${money(diff)}</strong><div style="font-size:13px;margin-top:4px">El efectivo contado está por encima del esperado.</div>`}
+ $('finishClose').classList.remove('hidden');
+};
+$('finishClose').onclick=async()=>{const {error}=await sb.from('drive_days').update({closed:true,counted_cash:day.counted_cash,updated_at:new Date().toISOString()}).eq('id',day.id).eq('user_id',user.id);if(error){alert(error.message);return}day.closed=true;closeSheets();render();alert('Cierre guardado en la nube.')}
+const {data:{session}}=await sb.auth.getSession(); if(session)await init(session.user);else showAuth();
 })();
 </script>
 </body>
